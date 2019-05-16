@@ -6,14 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_persistence_demo/widgets/secured_storage_view.dart';
 import 'package:flutter_persistence_demo/widgets/shared_preference_view.dart';
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return DashboardScreenState();
-  }
-}
-
-class DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
