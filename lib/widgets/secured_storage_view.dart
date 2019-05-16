@@ -3,26 +3,17 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceView extends StatefulWidget {
+class SecuredStorageView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return SharedPreferenceViewState();
+    return SecuredStorageViewState();
   }
 }
 
-class SharedPreferenceViewState extends State<SharedPreferenceView> {
-  final String KEY_COUNTER = 'counter';
-  int _counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Update view with the initial value
-    _retrievePersistedCounter();
-  }
+class SecuredStorageViewState extends State<SecuredStorageView> {
+  final String KEY_API_TOKEN = 'api_token';
+  String _data = "";
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +22,7 @@ class SharedPreferenceViewState extends State<SharedPreferenceView> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          'Storing simple data locally using\nshared_preferences ^0.5.2',
+          'Secure storage of credential using\nflutter_secure_storage ^3.2.1+1',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -40,7 +31,7 @@ class SharedPreferenceViewState extends State<SharedPreferenceView> {
         ),
         Padding(padding: EdgeInsets.only(bottom: 5)),
         Text(
-          'Wraps NSUserDefaults (on iOS) and SharedPreferences (on Android). Not recommended for storing critical data.',
+          'Stores data in Keychain (for iOS) and Keystore (for Android).',
           style: TextStyle(
             fontSize: 14,
           ),
@@ -58,16 +49,16 @@ class SharedPreferenceViewState extends State<SharedPreferenceView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'COUNTER',
+                  'API TOKEN',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 Padding(padding: EdgeInsets.only(bottom: 5)),
                 Text(
-                  '$_counter',
+                  '$_data',
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -80,13 +71,18 @@ class SharedPreferenceViewState extends State<SharedPreferenceView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     RaisedButton(
-                      child: Text('Increment'),
-                      onPressed: _incrementCounter,
+                      child: Text('Generate'),
+                      onPressed: _generatePassword,
                     ),
                     Padding(padding: EdgeInsets.all(10)),
                     RaisedButton(
-                      child: Text('Decrement'),
-                      onPressed: _decreaseCounter,
+                      child: Text('Save'),
+                      onPressed: _savePassword,
+                    ),
+                    Padding(padding: EdgeInsets.all(10)),
+                    RaisedButton(
+                      child: Text('Read'),
+                      onPressed: _readPassword,
                     ),
                   ],
                 ),
@@ -98,32 +94,9 @@ class SharedPreferenceViewState extends State<SharedPreferenceView> {
     );
   }
 
-  _retrievePersistedCounter() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    int counter = (preferences.getInt(KEY_COUNTER) ?? 0) + 1;
+  _generatePassword() async {}
 
-    setState(() {
-      _counter = counter;
-    });
-  }
+  _savePassword() async {}
 
-  _incrementCounter() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    int counter = (preferences.getInt(KEY_COUNTER) ?? 0) + 1;
-    await preferences.setInt(KEY_COUNTER, counter);
-
-    setState(() {
-      _counter = counter;
-    });
-  }
-
-  _decreaseCounter() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    int counter = (preferences.getInt(KEY_COUNTER) ?? 0) - 1;
-    await preferences.setInt(KEY_COUNTER, counter);
-
-    setState(() {
-      _counter = counter;
-    });
-  }
+  _readPassword() async {}
 }

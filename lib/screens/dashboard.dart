@@ -3,6 +3,7 @@
 // license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_persistence_demo/widgets/secured_storage_view.dart';
 import 'package:flutter_persistence_demo/widgets/shared_preference_view.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -25,6 +26,8 @@ class DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             children: <Widget>[
               SharedPreferenceView(),
+              Padding(padding: EdgeInsets.only(bottom: 30)),
+              SecuredStorageView(),
             ],
           ),
         ),
