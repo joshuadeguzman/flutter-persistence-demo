@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SecuredStorageView extends StatefulWidget {
@@ -60,7 +62,7 @@ class SecuredStorageViewState extends State<SecuredStorageView> {
                 Text(
                   '$_data',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,17 +74,17 @@ class SecuredStorageViewState extends State<SecuredStorageView> {
                   children: <Widget>[
                     RaisedButton(
                       child: Text('Generate'),
-                      onPressed: _generatePassword,
+                      onPressed: _generateApiToken,
                     ),
                     Padding(padding: EdgeInsets.all(10)),
                     RaisedButton(
                       child: Text('Save'),
-                      onPressed: _savePassword,
+                      onPressed: _saveApiToken,
                     ),
                     Padding(padding: EdgeInsets.all(10)),
                     RaisedButton(
                       child: Text('Read'),
-                      onPressed: _readPassword,
+                      onPressed: _readApiToken,
                     ),
                   ],
                 ),
@@ -94,9 +96,19 @@ class SecuredStorageViewState extends State<SecuredStorageView> {
     );
   }
 
-  _generatePassword() async {}
+  _generateApiToken() {
+    var desiredLength = 25;
+    var rand = new Random();
+    var randomString = new List.generate(desiredLength, (index) {
+      return rand.nextInt(33) + 89;
+    });
 
-  _savePassword() async {}
+    setState(() {
+      _data = String.fromCharCodes(randomString);
+    });
+  }
 
-  _readPassword() async {}
+  _saveApiToken() async {}
+
+  _readApiToken() async {}
 }
