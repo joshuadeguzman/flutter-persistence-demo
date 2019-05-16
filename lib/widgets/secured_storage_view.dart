@@ -5,6 +5,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecuredStorageView extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class SecuredStorageView extends StatefulWidget {
 }
 
 class SecuredStorageViewState extends State<SecuredStorageView> {
+  final storage = FlutterSecureStorage();
   final String KEY_API_TOKEN = 'api_token';
   String _data = "";
 
@@ -104,11 +106,54 @@ class SecuredStorageViewState extends State<SecuredStorageView> {
     });
 
     setState(() {
+      // Retrieve generated string
       _data = String.fromCharCodes(randomString);
+
+      // Log
+      print("Succesfully generated $_data");
+
+      // Display data to the user
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Generated string is $_data'),
+          duration: Duration(milliseconds: 1000),
+        ),
+      );
     });
   }
 
-  _saveApiToken() async {}
+  _saveApiToken() async {
+    await storage.write(key: KEY_API_TOKEN, value: _data);
 
-  _readApiToken() async {}
+    // Log
+    print("Succesfully saved $_data");
+
+    // Display data to the user
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Data successfully saved'),
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
+  }
+
+  _readApiToken() async {
+    String apiToken = await storage.read(key: KEY_API_TOKEN);
+
+    setState(() {
+      // Assign the retrieve data locally via synchronous call
+      _data = apiToken;
+
+      // Log
+      print("Succesfully retrieved $_data");
+
+      // Display data to the user
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Data retrieved is $_data'),
+          duration: Duration(milliseconds: 1000),
+        ),
+      );
+    });
+  }
 }
